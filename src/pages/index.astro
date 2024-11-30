@@ -2,6 +2,7 @@
 import Header from "../components/Header.astro";
 import SVGDOCU from "../components/SVGDOCU.astro";
 import Cube from "../components/Cube.astro";
+import Bubbles from "../components/Bubbles.astro";
 ---
 
 <html lang="en">
@@ -13,36 +14,44 @@ import Cube from "../components/Cube.astro";
 		<title>Astro</title>
 	</head>
 	<body>
-		<!-- LIQUID BACKGROUND -->
+		<div
+			class="welcome-box"
+		>
+			</span>Welcome To</span>
+			<div class="hover-box"> - {"<"}.VITC.{">"} - </div>
+		</div>
 		<div class="liquid-container">
-			<!-- style="  -->
-
-			<div class="welcome-box">
-				</span>Welcome To</span>
-				<div class="hover-box"> - {"<"}.VITC.{">"} - </div>
-			</div>
 			<div class="liquid"></div>
-
+			<Bubbles></Bubbles>
 		</div>
 
-		<!-- <SVGDOCU></SVGDOCU> -->
 	</body>
 	<style>
-
 		.liquid-container{
-			position:relative;
-			margin: 0;
-			height: 100vh;
+			position: absolute;
+			height: 3200px;
+			width: 100vw;
+			left: 0;
 			display: grid;
 			place-items: center;
+			background:linear-gradient(to bottom, #7293ff, #0c1121);
+			transition: top 2.6s ease;
+			top:0;
 		}
 
 		body {
-			background-color:#7293ff;
+			width: 100vw;
+			height: 100vh;
+			/* background-color:#7293ff; */
 			overflow: hidden;
+			place-items:center;
 		}
 
 		.welcome-box {
+			user-select:none;
+			position:absolute;
+			width:100%;
+			top:40%;
 			font: 700 30px consolas;
 			color: #fff;
 			text-decoration: none;
@@ -50,13 +59,12 @@ import Cube from "../components/Cube.astro";
 			overflow: hidden;
 
 			text-align: center;
-			margin: 50px 50px;
-			padding: 20px;
+			place-items:center;
 			color:aliceblue;
 
 			border-radius: 5px;
-			transition: 0.2s;
 			transform: scale(2);
+			z-index:1;
 		}
 
 		span {
@@ -66,15 +74,16 @@ import Cube from "../components/Cube.astro";
 
 
 		.liquid {
-			position: absolute;
+			position: relative;
 			/* width: 1800px;
 			height: 900px; */
 			width:2200px;
 			height: 1200px;
 			bottom:0;
-			z-index: -1;
+			left:-300px;
 			transition: 1.6s;
-			top:-50%
+			top:-45%;
+
 		}
 
 		.liquid::after,
@@ -126,8 +135,8 @@ import Cube from "../components/Cube.astro";
 			transition-delay: 0.6s;
         }
 
-		.welcome-box:hover ~ .liquid {
-			top:-170%;
+		.welcome-box:hover ~ .liquid-container   {
+			top:-250%;
 		}
 	</style>
 </html>
