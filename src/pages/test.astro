@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persistent Hover</title>
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: lightblue;
+      border: 2px solid darkblue;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .box:hover,
+    .box:focus {
+      background-color: orange;
+      border-color: red;
+      outline: none; /* Prevent default focus outline */
+    }
+  </style>
+</head>
+<body>
+  <button class="box" tabindex="0"></button>
+</body>
+</html>
