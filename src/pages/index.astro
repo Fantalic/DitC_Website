@@ -14,84 +14,97 @@ import Content from "../components/Content.astro";
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
 	</head>
-	<body>
+	<body  x-data="{show:false}">
+
+		<div class="content-container">
+			<div
+				class="welcome-box"
+				:class="show?'hidden':''"
+			>
+				</span>WELCOME TO</span>
+				<div
+					class="hover-box"
+					@click="show = !show"
+				>
+					 -{"<"}.VitC.{">"}-
+				</div>
+			</div>
+		</div>
+
+
+
+
 		<div
-			class="welcome-box"
+			class="container"
+			:class="show?'dive':''"
 		>
-			</span>Welcome To</span>
-			<div class="hover-box"> - {"<"}.VITC.{">"} - </div>
-
-		</div>
-
-		<div class="content">
-			<Content  ></Content>
-		</div>
-		
-		<div class="liquid-container">
 			<div class="liquid"></div>
+			<div style="height: 200vh;"></div>
 			<Bubbles></Bubbles>
+			<!-- style="  color:white;  z-index:2;  display: grid; place-items:center;   "  -->
+			<div >
+				<Content ></Content>
+			</div>
+
+			<Bubbles></Bubbles>
+			<button style="  color:white;  z-index:2; margin-top: 100px; " class="hover-box"><h2>CONTACT US</h2></button>
+
+
+
 		</div>
+		<!-- <div class="content">
+
+		</div> -->
+
 
 	</body>
 	<style>
-		.liquid-container{
-			position: absolute;
-			height: 3200px;
-			width: 100vw;
-			left: 0;
-			display: grid;
-			place-items: center;
-			background:linear-gradient(to bottom, #7293ff, #0c1121);
-			transition: top 2.6s ease;
-			top:0;
+		.hidden {
+			opacity: 0;
+			transition: opacity 1.6s ease, visibility 0s 1s; /* Delay of 1s */
 		}
 
 		body {
 			/* background-color:#7293ff; */
+			padding:0;
+			margin:0;
+			background:black;
+			/* overflow: hidden; */
+		}
+
+		.content-container{
 			height: 100vh;
-			overflow: hidden;
+			width: 100vw;
+			position:absolute;
 			display: grid;
 			place-items: center;
 		}
 
 		.welcome-box {
-			height: 20%;
 			user-select:none;
-			top:0;
 			font: 700 60px consolas;
-			text-decoration: none;
-			text-transform: uppercase;
-			overflow: hidden;
-
-			text-align: center;
-			place-items:center;
 			color:aliceblue;
-
 			border-radius: 5px;
-			z-index:2;
-
-			transition: 1.6s;
-		}
-
-		.content{
-			top:0;
-			left:0;
-			top:1.5%;
-			height: 100vh;
-			width: 100vw;
-			position: absolute;
 			z-index:1;
-			display: none;
 		}
+
+		.container{
+			position:relative;
+			display: grid;
+			place-items: center;
+			background:linear-gradient(to bottom, #7293ff, #0c1121);
+			transition: 1.6s;
+			overflow: hidden;
+			top:0;
+		}
+
 
 		.liquid {
-			position: relative;
+			position: absolute;
 			width:2200px;
 			height: 1200px;
-			left:-300px;
 			transition: 1.6s;
-			top:-40%;
-
+			top:-11%;
 		}
 
 		.liquid::after,
@@ -100,7 +113,6 @@ import Content from "../components/Content.astro";
 			content: "";
 			width: 200%;
 			height: 400%;
-			/* top:-10%; */
 			transform: translate(-25%, -75%);
 		}
 
@@ -130,8 +142,9 @@ import Content from "../components/Content.astro";
 			}
 		}
 
+
 		.hover-box {
-			padding:5px;
+			padding:0.75rem;
 			border-radius: 5px;
             /* background-color: #3498db; */
             background-color: #7293ff;
@@ -139,23 +152,21 @@ import Content from "../components/Content.astro";
 
 		.hover-box:hover   {
 			box-shadow: 0 0 5px #7293ff, inset 0 0 5px #7293ff;
-			transition-delay: 0.6s;
+			transition-delay: 0.1s;
         }
 
-		.welcome-box:hover {
-			margin:0;
-			padding:0;
-			top:-100%;
-			height:200%;
-			width:100%;
+		.content-container:hover {
+			/* top:-50%;
+			height: 100vh; */
 		}
 
-		.welcome-box:hover ~ .content {
-			display:flex;
-		}
+		/* .content-container:hover ~ .container {
+			top:-300vh;
+		} */
 
-		.welcome-box:hover ~ .liquid-container   {
-			top:-250%;
+		.dive{
+			top:-300vh;
+			/* object-position: bottom center; */
 		}
 	</style>
 </html>
