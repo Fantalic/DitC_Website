@@ -1,241 +1,120 @@
 ---
-import Intro from "./Intro.astro";
 
 ---
 
 <div
-    x-data="data"
+    class="vh-100 vw-100  text-center font-semibold text-2xl text-white py-10"
+    x-data="contentData"
     x-init="init()"
+    x-cloak
 >
+
+    <h1> Visionary Software Engineering Solutions for your Business </h1>
+    <h2 :class="vpart1 ? 'visible' : 'hidden'"> Deep diving into your needs ...</h2>
+
     <div
-        x-ref="observeMe"
-        :class="visible ? 'visible' : 'hidden'"
+        class="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3  gap-3 justify-items-left mt-10 ml-7 mr-7"
+        x-ref="contentDiv"
     >
-
-        <!-- <div class="english">
-            # Welcome to VitC - Visionary IT Concepts
-
-            At VitC, we transform innovative ideas into powerful technology solutions. As experts in AI development, cutting-edge web design, complex web applications, and robust desktop software engineering, we specialize in turning your vision into reality.
-
-            ## What We Offer:
-            - **AI Development**: Harness the power of artificial intelligence, including advanced RAG (Retrieval-Augmented Generation) systems, to enhance your business operations and decision-making.
-            - **Web Design**: Create visually stunning, user-friendly websites tailored to captivate and engage your audience.
-            - **Complex Web Applications**: Develop scalable and secure applications that streamline processes and drive efficiency.
-            - **Desktop Software Engineering**: Build sophisticated software solutions to address the unique challenges of your business.
-
-            ### Why Choose VitC?
-            - **Expertise You Can Trust**: With years of experience, we deliver exceptional quality tailored to your needs.
-            - **Innovation at the Core**: We leverage the latest technologies to keep your business ahead of the curve.
-            - **Client-Centric Approach**: Your success is our priority, and we work closely with you to bring your vision to life.
-
-            Discover how VitC can help you achieve your goals. [Contact us](#) today to start your journey toward visionary IT solutions!
-        </div> -->
         <div
-            class="english"
+            class=" hover-box grid grid-cols-2 overflow-hidden"
+            :class="vpart2 ? 'visible' : 'hidden'"
         >
-            <!-- # Willkommen bei VitC - Visionary IT Concepts
-
-            Bei VitC verwandeln wir innovative Ideen in leistungsstarke Technologie-Lösungen. Als Experten für KI-Entwicklung, modernstes Webdesign, komplexe Webanwendungen und robuste Desktop-Softwareentwicklung sind wir darauf spezialisiert, Ihre Vision Wirklichkeit werden zu lassen.
-
-            ## Was wir anbieten:
-            - **KI-Entwicklung**: Nutzen Sie die Kraft der Künstlichen Intelligenz, einschließlich fortschrittlicher RAG-Systeme (Retrieval-Augmented Generation), um Ihre Geschäftsabläufe und Entscheidungsprozesse zu optimieren.
-            - **Webdesign**: Erstellen Sie visuell ansprechende, benutzerfreundliche Websites, die Ihr Publikum begeistern und einbinden.
-            - **Komplexe Webanwendungen**: Entwickeln Sie skalierbare und sichere Anwendungen, die Prozesse optimieren und Effizienz steigern.
-            - **Desktop-Softwareentwicklung**: Entwickeln Sie anspruchsvolle Softwarelösungen, um die einzigartigen Herausforderungen Ihres Unternehmens zu meistern.
-
-            ### Warum VitC wählen?
-            - **Fachwissen, dem Sie vertrauen können**: Mit jahrelanger Erfahrung liefern wir herausragende Qualität, die auf Ihre Bedürfnisse zugeschnitten ist.
-            - **Innovation im Fokus**: Wir nutzen die neuesten Technologien, um Ihr Unternehmen stets auf dem neuesten Stand zu halten.
-            - **Kundenorientierter Ansatz**: Ihr Erfolg ist unsere Priorität, und wir arbeiten eng mit Ihnen zusammen, um Ihre Vision zu verwirklichen.
-
-            Entdecken Sie, wie VitC Ihnen helfen kann, Ihre Ziele zu erreichen. [Kontaktieren Sie uns](#), um Ihre Reise zu visionären IT-Lösungen zu starten! -->
-
-
-                <!-- <p>Bei VitC verwandeln wir innovative Ideen in leistungsstarke Technologie-Lösungen. Als Experten für KI-Entwicklung, modernstes Webdesign, komplexe Webanwendungen und robuste Desktop-Softwareentwicklung sind wir darauf spezialisiert, Ihre Vision Wirklichkeit werden zu lassen.</p> -->
-                <h1> Visionary Software Engineering Solutions for your Business </h1>
-                <h2 :class="vpart1 ? 'visible' : 'hidden'"> Deep diving into your needs ...</h2>
-
-                <div style="display:grid; height:90vh">
-
-                    <div
-                        style="display:flex"
-                        :class="vpart2 ? 'visible' : 'hidden'"
-                    >
-
-                        <svg width="128px" height="128px" viewBox="0 0 512 512"  >
-                            <title>ai</title>
-                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <g id="icon" fill="#FFFFFF" transform="translate(64.000000, 64.000000)">
-                                    <path d="M320,64 L320,320 L64,320 L64,64 L320,64 Z M171.749388,128 L146.817842,128 L99.4840387,256 L121.976629,256 L130.913039,230.977 L187.575039,230.977 L196.319607,256 L220.167172,256 L171.749388,128 Z M260.093778,128 L237.691519,128 L237.691519,256 L260.093778,256 L260.093778,128 Z M159.094727,149.47526 L181.409039,213.333 L137.135039,213.333 L159.094727,149.47526 Z M341.333333,256 L384,256 L384,298.666667 L341.333333,298.666667 L341.333333,256 Z M85.3333333,341.333333 L128,341.333333 L128,384 L85.3333333,384 L85.3333333,341.333333 Z M170.666667,341.333333 L213.333333,341.333333 L213.333333,384 L170.666667,384 L170.666667,341.333333 Z M85.3333333,0 L128,0 L128,42.6666667 L85.3333333,42.6666667 L85.3333333,0 Z M256,341.333333 L298.666667,341.333333 L298.666667,384 L256,384 L256,341.333333 Z M170.666667,0 L213.333333,0 L213.333333,42.6666667 L170.666667,42.6666667 L170.666667,0 Z M256,0 L298.666667,0 L298.666667,42.6666667 L256,42.6666667 L256,0 Z M341.333333,170.666667 L384,170.666667 L384,213.333333 L341.333333,213.333333 L341.333333,170.666667 Z M0,256 L42.6666667,256 L42.6666667,298.666667 L0,298.666667 L0,256 Z M341.333333,85.3333333 L384,85.3333333 L384,128 L341.333333,128 L341.333333,85.3333333 Z M0,170.666667 L42.6666667,170.666667 L42.6666667,213.333333 L0,213.333333 L0,170.666667 Z M0,85.3333333 L42.6666667,85.3333333 L42.6666667,128 L0,128 L0,85.3333333 Z" id="Combined-Shape">
-                                    </path>
-                                </g>
-                            </g>
-                        </svg>
-                        <div>
-                            <p>AI-Tech</p>
-                            <ul>
-                                <li>RAG Systems</li>
-                                <li>Chat Bots</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div
-                        style="display:flex"
-                        :class="vpart3 ? 'visible' : 'hidden'"
-
-                    >
-                        <img
-                            width="128px"
-                            height="128px"
-                            style="filter: invert(1);"
-                            src="https://png.pngtree.com/png-vector/20230304/ourmid/pngtree-back-end-developer-line-icon-vector-png-image_6631175.png"
-                            alt=""
-                        >
-
-                        <div>
-                            <p>Frontend-Design</p>
-                            <ul>
-                                <li>React, Preact, Next</li>
-                                <li>Vue, Nuxt</li>
-                                <li>Angular</li>
-                                <li>Astro</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div
-                    style="display:flex"
-                    :class="vpart4 ? 'visible' : 'hidden'"
-
+            <div class="text-center flex  flex-col  items-center">
+                <h5>AI-Tech</h5>
+                <svg
+                    class="  mt-3"
+                    width="128px"
+                    height="128px"
+                    viewBox="0 0 512 512"
                 >
-                    <img
-                        width="128px"
-                        height="128px"
-                        src="https://www.seekpng.com/png/full/825-8255564_png-file-svg-cloud-backend-icon.png"
-                        style="filter: invert(1);"
-                        alt=""
-                    >
-
-                    <div>
-                        <p>Backend-Design</p>
-                        <ul>
-                            <li>Docker</li>
-                            <li>Kubernetes</li>
-                            <li>local, intern systems</li>
-                            <li>SQL, NoSQL, Vector DBs,...</li>
-                        </ul>
-                    </div>
-                    </div>
-
-                    <!-- <div
-                        style="display:flex"
-                        :class="vpart2 ? 'visible' : 'hidden'"
-                    >
-
-                        <svg width="128px" height="128px" viewBox="0 0 512 512"  >
-                            <title>ai</title>
-                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <g id="icon" fill="#FFFFFF" transform="translate(64.000000, 64.000000)">
-                                    <path d="M320,64 L320,320 L64,320 L64,64 L320,64 Z M171.749388,128 L146.817842,128 L99.4840387,256 L121.976629,256 L130.913039,230.977 L187.575039,230.977 L196.319607,256 L220.167172,256 L171.749388,128 Z M260.093778,128 L237.691519,128 L237.691519,256 L260.093778,256 L260.093778,128 Z M159.094727,149.47526 L181.409039,213.333 L137.135039,213.333 L159.094727,149.47526 Z M341.333333,256 L384,256 L384,298.666667 L341.333333,298.666667 L341.333333,256 Z M85.3333333,341.333333 L128,341.333333 L128,384 L85.3333333,384 L85.3333333,341.333333 Z M170.666667,341.333333 L213.333333,341.333333 L213.333333,384 L170.666667,384 L170.666667,341.333333 Z M85.3333333,0 L128,0 L128,42.6666667 L85.3333333,42.6666667 L85.3333333,0 Z M256,341.333333 L298.666667,341.333333 L298.666667,384 L256,384 L256,341.333333 Z M170.666667,0 L213.333333,0 L213.333333,42.6666667 L170.666667,42.6666667 L170.666667,0 Z M256,0 L298.666667,0 L298.666667,42.6666667 L256,42.6666667 L256,0 Z M341.333333,170.666667 L384,170.666667 L384,213.333333 L341.333333,213.333333 L341.333333,170.666667 Z M0,256 L42.6666667,256 L42.6666667,298.666667 L0,298.666667 L0,256 Z M341.333333,85.3333333 L384,85.3333333 L384,128 L341.333333,128 L341.333333,85.3333333 Z M0,170.666667 L42.6666667,170.666667 L42.6666667,213.333333 L0,213.333333 L0,170.666667 Z M0,85.3333333 L42.6666667,85.3333333 L42.6666667,128 L0,128 L0,85.3333333 Z" id="Combined-Shape">
-                                    </path>
-                                </g>
-                            </g>
-                        </svg>
-                        <div>
-                            <p>AI-Tech</p>
-                            <ul>
-                                <li>RAG Systems</li>
-                                <li>Chat Bots</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div
-                        style="display:flex"
-                        :class="vpart3 ? 'visible' : 'hidden'"
-
-                    >
-                        <img
-                            width="128px"
-                            height="128px"
-                            style="filter: invert(1);"
-                            src="https://png.pngtree.com/png-vector/20230304/ourmid/pngtree-back-end-developer-line-icon-vector-png-image_6631175.png"
-                            alt=""
-                        >
-
-                        <div>
-                            <p>Frontend-Design</p>
-                            <ul>
-                                <li>React, Preact, Next</li>
-                                <li>Vue, Nuxt</li>
-                                <li>Angular</li>
-                                <li>Astro</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div
-                    style="display:flex"
-                    :class="vpart4 ? 'visible' : 'hidden'"
-
-                >
-                    <img
-                        width="128px"
-                        height="128px"
-                        src="https://www.seekpng.com/png/full/825-8255564_png-file-svg-cloud-backend-icon.png"
-                        style="filter: invert(1);"
-                        alt=""
-                    >
-
-                    <div>
-                        <p>Backend-Design</p>
-                        <ul>
-                            <li>Docker</li>
-                            <li>Kubernetes</li>
-                            <li>local, intern systems</li>
-                            <li>SQL, NoSQL, Vector DBs,...</li>
-                        </ul>
-                    </div>
-                    </div> -->
-                </div>
-
-
-
-
-                <!-- <ul>
-                    <li><strong>KI-Entwicklung:</strong> fortschrittlicher RAG-Systeme (Retrieval-Augmented Generation), um Ihre Geschäftsabläufe und Entscheidungsprozesse zu optimieren.</li>
-                    <li><strong>Webdesign:</strong> Erstellen Sie visuell ansprechende, benutzerfreundliche Websites, die Ihr Publikum begeistern und einbinden.</li>
-                    <li><strong>Komplexe Webanwendungen:</strong> Entwickeln Sie skalierbare und sichere Anwendungen, die Prozesse optimieren und Effizienz steigern.</li>
-                    <li><strong>Desktop-Softwareentwicklung:</strong> Entwickeln Sie anspruchsvolle Softwarelösungen, um die einzigartigen Herausforderungen Ihres Unternehmens zu meistern.</li>
-                </ul>
-
-                <h2>Warum VitC wählen?</h2>
-                <ul>
-                    <li><strong>Fachwissen, dem Sie vertrauen können:</strong> Mit jahrelanger Erfahrung liefern wir herausragende Qualität, die auf Ihre Bedürfnisse zugeschnitten ist.</li>
-                    <li><strong>Innovation im Fokus:</strong> Wir nutzen die neuesten Technologien, um Ihr Unternehmen stets auf dem neuesten Stand zu halten.</li>
-                    <li><strong>Kundenorientierter Ansatz:</strong> Ihr Erfolg ist unsere Priorität, und wir arbeiten eng mit Ihnen zusammen, um Ihre Vision zu verwirklichen.</li>
-                </ul>
-
-                <p>Entdecken Sie, wie VitC Ihnen helfen kann, Ihre Ziele zu erreichen. <a href="#">Kontaktieren Sie uns</a>, um Ihre Reise zu visionären IT-Lösungen zu starten!</p>
-         -->
+                    <title>ai</title>
+                    <g id="icon" fill="#FFFFFF" >
+                        <path
+                            transform="scale(1.25)"
+                            d="M320,64 L320,320 L64,320 L64,64 L320,64 Z M171.749388,128 L146.817842,128 L99.4840387,256 L121.976629,256 L130.913039,230.977 L187.575039,230.977 L196.319607,256 L220.167172,256 L171.749388,128 Z M260.093778,128 L237.691519,128 L237.691519,256 L260.093778,256 L260.093778,128 Z M159.094727,149.47526 L181.409039,213.333 L137.135039,213.333 L159.094727,149.47526 Z M341.333333,256 L384,256 L384,298.666667 L341.333333,298.666667 L341.333333,256 Z M85.3333333,341.333333 L128,341.333333 L128,384 L85.3333333,384 L85.3333333,341.333333 Z M170.666667,341.333333 L213.333333,341.333333 L213.333333,384 L170.666667,384 L170.666667,341.333333 Z M85.3333333,0 L128,0 L128,42.6666667 L85.3333333,42.6666667 L85.3333333,0 Z M256,341.333333 L298.666667,341.333333 L298.666667,384 L256,384 L256,341.333333 Z M170.666667,0 L213.333333,0 L213.333333,42.6666667 L170.666667,42.6666667 L170.666667,0 Z M256,0 L298.666667,0 L298.666667,42.6666667 L256,42.6666667 L256,0 Z M341.333333,170.666667 L384,170.666667 L384,213.333333 L341.333333,213.333333 L341.333333,170.666667 Z M0,256 L42.6666667,256 L42.6666667,298.666667 L0,298.666667 L0,256 Z M341.333333,85.3333333 L384,85.3333333 L384,128 L341.333333,128 L341.333333,85.3333333 Z M0,170.666667 L42.6666667,170.666667 L42.6666667,213.333333 L0,213.333333 L0,170.666667 Z M0,85.3333333 L42.6666667,85.3333333 L42.6666667,128 L0,128 L0,85.3333333 Z" id="Combined-Shape">
+                        </path>
+                    </g>
+                </svg>
             </div>
+
+
+            <div class="text-nowrap text-left mt-6 pr-20 overflow-hidden">
+                <ul>
+                    <li>- RAG Systems</li>
+                    <li>- Chat Bots</li>
+                </ul>
+            </div>
+        </div>
+
+        <div
+            class="hover-box grid grid-cols-2 overflow-hidden "
+            :class="vpart3 ? 'visible' : 'hidden'"
+        >
+            <div class="text-center flex  flex-col  items-center">
+                <h5>Front-End</h5>
+                <img
+                    class=""
+                    width="148px"
+                    height="148px"
+                    style="filter: invert(1);"
+                    src="https://png.pngtree.com/png-vector/20230304/ourmid/pngtree-back-end-developer-line-icon-vector-png-image_6631175.png"
+                    alt=""
+                >
+            </div>
+
+
+            <div class="text-nowrap text-left mt-6 pr-20 overflow-hidden">
+                <ul>
+                    <li>- React, Preact, Next</li>
+                    <li>- Vue, Nuxt</li>
+                    <li>- Angular</li>
+                    <li>- Astro</li>
+                </ul>
+            </div>
+        </div>
+
+        <div
+            class=" hover-box grid grid-cols-2 overflow-hidden text-ellipsis"
+            :class="vpart4 ? 'visible' : 'hidden'"
+        >
+            <div class="text-center flex  flex-col  items-center">
+                <h5 class="mr-2">Back-End</h5>
+                <img
+                    class="mt-2  w-128 h-128"
+                    width="128px"
+                    height="128px"
+                    src="https://www.seekpng.com/png/full/825-8255564_png-file-svg-cloud-backend-icon.png"
+                    style="filter: invert(1);"
+                    alt=""
+                >
+            </div>
+
+            <div class="text-nowrap text-left mt-6 pr-20 overflow-hidden">
+                <ul>
+                    <li>- Docker</li>
+                    <li>- Kubernetes</li>
+                    <li>- local, intern systems</li>
+                    <li>- SQL, NoSQL, Vector DBs,...</li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
     import Alpine from 'alpinejs';
 
-    Alpine.data('data', () => ({
-        visible:false,
-        vpart1:false,
-        vpart2:false,
-        vpart3:false,
-        vpart4:false,
-        vpart5:false,
+    Alpine.data('contentData', () => ({
+        visible:true,
+        vpart1:true,
+        vpart2:true,
+        vpart3:true,
+        vpart4:true,
+        vpart5:true,
         // Initialize IntersectionObserver
         init() {
-            const dt = 500;
+            const dt = 600;
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if(entry.isIntersecting){
@@ -259,51 +138,23 @@ import Intro from "./Intro.astro";
                         },dt)
 
                 } else {
-                    //this.visible = false ;
-                    //this.vpart1 = false;
-                    //this.vpart2 = false;
-                    //this.vpart3 = false;
-                    //this.vpart4 = false;
-                    //this.vpart5 = false;
-
                 }
             });
             });
-
-            observer.observe(this.$refs.observeMe);
+            observer.observe(this.$refs.contentDiv);
         }
     }));
-  </script>
+</script>
 
 <style>
-
-.content{
-    user-select:none;
-    text-align: left;
-    color:aliceblue;
-    width:100%;
-}
-
-.english{
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding:1rem;
-
-    ul {
-        text-align: left;
+    .hover-box {
+        padding:0.75rem;
+        border-radius: 5px;
+        /* background-color: #3498db; */
     }
 
-}
-
-/* .hidden {
-  opacity: 0;
-  transition: opacity 3s ease, visibility 0s 1s;
-}
-
-.visible {
-  opacity: 1;
-  transition: opacity 3.5s ease;
-} */
+    .hover-box:hover   {
+        box-shadow: 0 0 15px #7293ff, inset 0 0 15px #7293ff;
+        transition-delay: 0.07s;
+    }
 </style>
