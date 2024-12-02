@@ -1,10 +1,8 @@
 ---
-import Header from "../components/Header.astro";
-import SVGDOCU from "../components/SVGDOCU.astro";
 import Cube from "../components/Cube.astro";
 import Bubbles from "../components/Bubbles.astro";
 import Content from "../components/Content.astro";
-
+import Contact from "../components/Contact.astro";
 
 ---
 
@@ -23,39 +21,35 @@ import Content from "../components/Content.astro";
 	>
 		<div
 			class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-80 text-center transition-all duration-1000  "
-			:class="{'animate-pulse':!dive1}"
+			:class="{'animate-pulse':true}"
 		>
-			<span x-show="!dive1">WELCOME TO</span>
+			<span >WELCOME TO</span>
 			<div
 				class="border-2  rounded-3xl px-2 py-2 "
 			>
 				<div
-					x-show="!dive1"
-					:class="{'opacity-0': dive1}"
 					class=" font-bold text-5xl  "
 					@click="smoothScroll('#section1')"
 				>
 					-{"<"}.VitC.{">"}-
 				</div>
-				<div
-					x-cloak
-					:class="{'hidden': !dive1}"
-				>
-				</div>
+
 			</div>
 		</div>
 
 		<div
-			class="ocean-container relative linear-gradient-to-b from-blue-500 to-blue-800 overflow-hidden items-center justify-center"
+			class=" ocean-container relative linear-gradient-to-b from-blue-500 to-blue-800 overflow-hidden items-center justify-center"
 		>
-			<div class="liquid"></div>
+			<div class="liquid liquid-sm"></div>
 			<div style="height:450vh"> </div>
 
 			<secton id="section1"  >
-				<div class="absolute   z-50 w-full" >
+				<div class="absolute z-50 w-full" >
 					<Content ></Content>
 					<div
 						x-ref="footer"
+						x-cloak
+						id="footer"
 						x-transition.duration.500ms
 						class="flex justify-center "
 						style="margin-top:10rem;"
@@ -64,13 +58,21 @@ import Content from "../components/Content.astro";
 						<button
 							class=" hover-box  z-20 font-bold text-4xl  "
 							:class="{'sticky': showFooter}"
+							@click="smoothScroll('#section2')"
 						>
 							<h2>CONTACT US</h2>
 						</button>
 					</div>
 				</div>
 			</section>
-			<div style="height:200vh"> </div>
+			<div  style="height:250vh"></div>
+			<section id="section2"  >
+				<div x-ref="contact" id="contact"  class="absolute w-full" >
+					<Contact></Contact>
+				</div>
+			</section>
+
+			<div style="height:250vh"> </div>
 			<Bubbles></Bubbles>
 		</div>
 
@@ -79,29 +81,37 @@ import Content from "../components/Content.astro";
 		import Alpine from 'alpinejs';
 		import {scrollTo} from '../scripts/scrollControl';
 
-
 		Alpine.data('data', () => ({
-			dive1:false,
 			showFooter:false,
 			// Initialize IntersectionObserver
 			init() {
 				var options = {
-					root: document.documentElement,
+					root: document.documentElement
 				};
 
-				var callback = (visible) => {
-					console.log("visible", visible);
-					this.showFooter= visible
-				}
-
 				var observer = new IntersectionObserver((entries, observer) => {
-					entries.forEach(entry => {
-						callback(entry.intersectionRatio > 0);
-					});
+					let footer = false
+					let contact = false
+					for (var i = 0; i < entries.length; i++) {
+						const entry = entries[i];
+						if(entry.target.id==="contact") {
+							contact = (entry.intersectionRatio > 0)
+						}
+						if(entry.target.id==="footer"){
+							footer = entry.intersectionRatio > 0
+						}
+						if(contact){
+							this.showFooter=false
+						} else{
+							this.showFooter = footer
+						}
+					}
+
 				} );
 
 				const element = this.$refs.footer;
 				observer.observe(element);
+				observer.observe(this.$refs.contact);
 
 			},
 			onVisible(element, callback) {
@@ -131,6 +141,7 @@ import Content from "../components/Content.astro";
         }
 
 		[x-cloak] {
+			position:relative;
 			display: none;
 		}
 
@@ -142,9 +153,12 @@ import Content from "../components/Content.astro";
 			position: absolute;
 			width:2400px;
 			height: 1200px;
-			left:-400px;
 			transition: 1.6s;
-			top:-11%;
+		}
+
+		.liquid-sm{
+			left:-500px;
+			top:-10%;
 		}
 
 		.liquid::after,
@@ -160,7 +174,7 @@ import Content from "../components/Content.astro";
 			border-radius: 45%;
 			background: rgba(20, 20, 20, 1);
 			box-shadow: 0 0 10px 5px #7293ff, inset 0 0 5px #7293ff;
-			animation: animate 24s linear infinite;
+			animation: animate 28s linear infinite;
 			opacity: 0.8;
 		}
 
@@ -169,7 +183,7 @@ import Content from "../components/Content.astro";
 			box-shadow: 0 0 10px rgba(26, 26, 26, 0.5),
 				inset 0 0 5px rgba(26, 26, 26, 0.5);
 			background: rgba(26, 26, 26, 0.5);
-			animation: animate 24s linear infinite;
+			animation: animate 28s linear infinite;
 		}
 
 		@keyframes animate {
