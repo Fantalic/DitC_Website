@@ -1,146 +1,94 @@
-<div class="ocean">
-    <div class="bubbles">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+---
+const count = 45;
+
+---
+<!-- <div id="animatedElement" class="text-white w-10 h-10 bottom-10 z-60 absolute"> HALLO</div> -->
+
+<div class="bubbles">
+
+  {Array.from({ length: count }, (_, i) => {
+    const size = 50*Math.random();
+    const animationDuration = 30*(Math.round(Math.random())+2 )
+    const offset ={
+      top:50*Math.random()-25+"vh",
+      position: "relative",
+      width: size +"px",
+      height: size+"px",
+    }
+    const style = {
+      opacity:  0.3*Math.random()+0.1,
+      left: 120*Math.random()-10+"%",
+      animationDelay: 60*Math.random()+"s",
+      animationDuration: animationDuration+"s",
+    }
+
+    return (
+        <span style={style} >
+          <div style={offset}></div>
+        </span>
+    )
+    })}
 </div>
+<script>
+    // const element = document.getElementById('animatedElement');
+    // const duration = 3000; // Duration of the animation in milliseconds
+    // const startTime = performance.now(); // Get the current time
+    // console.log(element)
+
+    // function animate(time) {
+    //     const elapsed = time - startTime;
+
+    //     // Calculate progress (0 to 1)
+    //     const progress = Math.min(elapsed / duration, 1);
+
+    //     // Define your function f(x)
+    //     const a = -200; // Coefficient for the parabola
+    //     const b = 400; // Linear coefficient
+    //     const c = 100; // Constant term
+
+    //     // Calculate x position based on progress
+    //     const x = progress * window.innerWidth; // Move across the screen
+    //     const y = a * Math.pow(x / window.innerWidth, 2) + b * (x / window.innerWidth) + c; // f(x)
+
+    //     // Set the new position of the element
+    //     element.style.transform = `translate(${x}px, ${y}px)`;
+
+    //     // Continue animating until duration is reached
+    //     if (progress < 1) {
+    //         requestAnimationFrame(animate);
+    //     }
+    // }
+
+    // Start the animation
+    // requestAnimationFrame(animate);
+</script>
 
 <style>
 
-.ocean {
-  /* position: relative; */
-  width: 100%;
-  height: 100vh;
-}
-
 .bubbles {
+  position: relative;
   width: 100%;
-  height: 100vh;
-  animation: bubbles 16s linear infinite;
+  top:25vh;
+  animation: bubbles  0s linear infinite;
 }
 
-    @keyframes bubbles {
-      0%, 100% {transform: rotate(-4deg);}
-      50% {transform: rotate(4deg);}
-    }
+@keyframes bubbles {
+  0%, 100% {transform: rotate(-0.5deg);}
+  50% {transform: rotate(0.5deg);}
+}
 
-.bubbles span {
-  width: 50px;
-  height: 50px;
+.bubbles div {
   border-radius: 100%;
-  position: absolute;
   background-color: white;
-  animation: bubble 15s ease-in-out infinite;
+}
+.bubbles span {
+  position: absolute;
+  animation: bubble 1s ease-in-out infinite;
 }
 
-    @keyframes bubble {
-      0% {bottom: -10%; opacity: 0;}
-      100% {bottom: 160%;}
-    }
-
-.bubbles span:nth-child(1) {
-  width: 50px;
-  height: 50px;
-  opacity: 0.5;
-  left: 10%;
-  animation-delay: 3s;
-  animation-duration: 10s;
-  opacity: 0.2;
-}
-
-.bubbles span:nth-child(2) {
-  width: 30px;
-  height: 30px;
-  opacity: 0.5;
-  left: 25%;
-  animation-delay: 1s;
-  animation-duration: 5s;
-  opacity: 0.1;
-}
-
-.bubbles span:nth-child(3) {
-  width: 10px;
-  height: 10px;
-  opacity: 0.5;
-  left: 30%;
-  animation-delay: 5s;
-  animation-duration: 20s;
-  opacity: 0.3;
-}
-
-.bubbles span:nth-child(4) {
-  width: 35px;
-  height: 35px;
-  opacity: 0.5;
-  left: 40%;
-  animation-delay: 8s;
-  animation-duration: 8s;
-  opacity: 0.2;
-}
-
-.bubbles span:nth-child(5) {
-  width: 45px;
-  height: 45px;
-  opacity: 0.5;
-  left: 60%;
-  animation-delay: 10s;
-  animation-duration: 15s;
-  opacity: 0.1;
-}
-
-.bubbles span:nth-child(6) {
-  width: 40px;
-  height: 40px;
-  opacity: 0.5;
-  left: 80%;
-  animation-delay: 3s;
-  animation-duration: 30s;
-  opacity: 0.4;
-}
-
-.bubbles span:nth-child(7) {
-  width: 15px;
-  height: 15px;
-  opacity: 0.5;
-  left: 90%;
-  animation-duration: 25s;
-  opacity: 0.3;
-}
-
-.bubbles span:nth-child(8) {
-  width: 20px;
-  height: 20px;
-  opacity: 0.5;
-  left: 50%;
-  animation-duration: 10s;
-  opacity: 0.2;
-}
-
-.bubbles span:nth-child(9) {
-  width: 15px;
-  height: 15px;
-  opacity: 0.5;
-  left: 15%;
-  animation-duration: 25s;
-  opacity: 0.3;
-}
-
-.bubbles span:nth-child(10) {
-  width: 20px;
-  height: 20px;
-  opacity: 0.5;
-  left: 5%;
-  animation-delay: 3s;
-  animation-duration: 30s;
-  opacity: 0.4;
+@keyframes bubble {
+  0% {bottom: 0; opacity: 0;}
+  100% {bottom: 550vh; }
 }
 
 </style>

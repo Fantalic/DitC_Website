@@ -49,22 +49,31 @@ import Content from "../components/Content.astro";
 			class="ocean-container relative linear-gradient-to-b from-blue-500 to-blue-800 overflow-hidden items-center justify-center"
 		>
 			<div class="liquid"></div>
-			<div style="height: 200vh;"> hallo</div>
-			<Bubbles></Bubbles>
-			<!-- style="  color:white;  z-index:2;  display: grid; place-items:center;   "  -->
-			<secton id="section1" >
-				<Content ></Content>
-				<div class="w-100 flex items-center justify-center mt-40">
-					<button
-						class="hover-box left-1/2  z-20 font-bold text-5xl  "
-					>
-						<h2>CONTACT US</h2>
-					</button>
-				</div>
+			<div style="height:450vh"> </div>
 
+			<secton id="section1"  >
+				<div class="absolute   z-50 w-full" >
+					<Content ></Content>
+					<div
+						x-ref="footer"
+						x-transition.duration.500ms
+						class="flex justify-center "
+						style="margin-top:10rem;"
+						:class="{'opacity-100 transition-opacity duration-500': showFooter, 'opacity-0': !showFooter}"
+					>
+						<button
+							class=" hover-box  z-20 font-bold text-4xl  "
+							:class="{'sticky': showFooter}"
+						>
+							<h2>CONTACT US</h2>
+						</button>
+					</div>
+				</div>
 			</section>
+			<div style="height:200vh"> </div>
 			<Bubbles></Bubbles>
 		</div>
+
 	</body>
 	<script >
 		import Alpine from 'alpinejs';
@@ -73,8 +82,29 @@ import Content from "../components/Content.astro";
 
 		Alpine.data('data', () => ({
 			dive1:false,
+			showFooter:false,
 			// Initialize IntersectionObserver
 			init() {
+				var options = {
+					root: document.documentElement,
+				};
+
+				var callback = (visible) => {
+					console.log("visible", visible);
+					this.showFooter= visible
+				}
+
+				var observer = new IntersectionObserver((entries, observer) => {
+					entries.forEach(entry => {
+						callback(entry.intersectionRatio > 0);
+					});
+				} );
+
+				const element = this.$refs.footer;
+				observer.observe(element);
+
+			},
+			onVisible(element, callback) {
 
 			},
 			smoothScroll(target) {
@@ -90,29 +120,18 @@ import Content from "../components/Content.astro";
 		}));
 	</script>
 	<style>
+		.sticky {
+            position: fixed;
+            bottom: 4rem;
+            background-color: #4A5568; /* Tailwind gray-600 */
+            z-index: 10; /* Ensure it stays above other content */
+        }
 		html {
             scroll-behavior: smooth; /* Enables smooth scrolling */
         }
 
-        section {
-            height: 100vh; /* Full viewport height for each section */
-        }
-
 		[x-cloak] {
 			display: none;
-		}
-
-		.hidden {
-			opacity: 0;
-			transition: opacity 1.6s ease, visibility 0s 1s; /* Delay of 1s */
-		}
-
-		.content-container{
-			height: 100vh;
-			width: 100vw;
-			position:absolute;
-			display: grid;
-			place-items: center;
 		}
 
 		.ocean-container{
@@ -121,8 +140,9 @@ import Content from "../components/Content.astro";
 
 		.liquid {
 			position: absolute;
-			width:2200px;
+			width:2400px;
 			height: 1200px;
+			left:-400px;
 			transition: 1.6s;
 			top:-11%;
 		}
@@ -140,7 +160,7 @@ import Content from "../components/Content.astro";
 			border-radius: 45%;
 			background: rgba(20, 20, 20, 1);
 			box-shadow: 0 0 10px 5px #7293ff, inset 0 0 5px #7293ff;
-			animation: animate 16s linear infinite;
+			animation: animate 24s linear infinite;
 			opacity: 0.8;
 		}
 
@@ -149,8 +169,7 @@ import Content from "../components/Content.astro";
 			box-shadow: 0 0 10px rgba(26, 26, 26, 0.5),
 				inset 0 0 5px rgba(26, 26, 26, 0.5);
 			background: rgba(26, 26, 26, 0.5);
-
-			animation: animate 16s linear infinite;
+			animation: animate 24s linear infinite;
 		}
 
 		@keyframes animate {

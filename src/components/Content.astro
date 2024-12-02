@@ -3,27 +3,37 @@
 ---
 
 <div
-    class="vh-100 vw-100  text-center font-semibold text-2xl text-white py-10"
+    class="text-center font-semibold text-2xl text-white"
     x-data="contentData"
     x-init="init()"
-    x-cloak
+    x-transition.duration.500ms
 >
+    <div class="text-4xl m-3">
+        <h1> Visionary Software Engineering </h1>
+        <h1>Solutions for your Business</h1>
+    </div>
+    <h2 > Deep diving into your needs ...</h2>
 
-    <h1> Visionary Software Engineering Solutions for your Business </h1>
-    <h2 :class="vpart1 ? 'visible' : 'hidden'"> Deep diving into your needs ...</h2>
-
+    <!--  -->
     <div
-        class="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3  gap-3 justify-items-left mt-10 ml-7 mr-7"
+        class="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3  gap-3 overflow-x-auto justify-items-left m-3 p-5"
         x-ref="contentDiv"
     >
         <div
-            class=" hover-box grid grid-cols-2 overflow-hidden"
-            :class="vpart2 ? 'visible' : 'hidden'"
+            x-data="{size:148, visible: true, selected:false}"
+            class="hover-box   overflow-hidden duration-300 ease-in-out transition-all"
+            @click="selected = true"
+            @mouseleave=" selected=false"
+            @mouseover=" selected=true"
         >
-            <div class="text-center flex  flex-col  items-center">
-                <h5>AI-Tech</h5>
+            <div
+                class="text-center flex  flex-col  items-center"
+            >
+                <h5 class="m-2">AI Development</h5>
                 <svg
-                    class="  mt-3"
+                    class=" ml-9 mt-3"
+                    class="transition-transform duration-300 ease-in-out "
+                    :class="selected ? 'scale-125' : ''"
                     width="128px"
                     height="128px"
                     viewBox="0 0 512 512"
@@ -31,126 +41,100 @@
                     <title>ai</title>
                     <g id="icon" fill="#FFFFFF" >
                         <path
-                            transform="scale(1.25)"
+                            transform="scale(1)"
                             d="M320,64 L320,320 L64,320 L64,64 L320,64 Z M171.749388,128 L146.817842,128 L99.4840387,256 L121.976629,256 L130.913039,230.977 L187.575039,230.977 L196.319607,256 L220.167172,256 L171.749388,128 Z M260.093778,128 L237.691519,128 L237.691519,256 L260.093778,256 L260.093778,128 Z M159.094727,149.47526 L181.409039,213.333 L137.135039,213.333 L159.094727,149.47526 Z M341.333333,256 L384,256 L384,298.666667 L341.333333,298.666667 L341.333333,256 Z M85.3333333,341.333333 L128,341.333333 L128,384 L85.3333333,384 L85.3333333,341.333333 Z M170.666667,341.333333 L213.333333,341.333333 L213.333333,384 L170.666667,384 L170.666667,341.333333 Z M85.3333333,0 L128,0 L128,42.6666667 L85.3333333,42.6666667 L85.3333333,0 Z M256,341.333333 L298.666667,341.333333 L298.666667,384 L256,384 L256,341.333333 Z M170.666667,0 L213.333333,0 L213.333333,42.6666667 L170.666667,42.6666667 L170.666667,0 Z M256,0 L298.666667,0 L298.666667,42.6666667 L256,42.6666667 L256,0 Z M341.333333,170.666667 L384,170.666667 L384,213.333333 L341.333333,213.333333 L341.333333,170.666667 Z M0,256 L42.6666667,256 L42.6666667,298.666667 L0,298.666667 L0,256 Z M341.333333,85.3333333 L384,85.3333333 L384,128 L341.333333,128 L341.333333,85.3333333 Z M0,170.666667 L42.6666667,170.666667 L42.6666667,213.333333 L0,213.333333 L0,170.666667 Z M0,85.3333333 L42.6666667,85.3333333 L42.6666667,128 L0,128 L0,85.3333333 Z" id="Combined-Shape">
                         </path>
                     </g>
                 </svg>
             </div>
-
-
-            <div class="text-nowrap text-left mt-6 pr-20 overflow-hidden">
-                <ul>
-                    <li>- RAG Systems</li>
-                    <li>- Chat Bots</li>
-                </ul>
+            <div
+                x-cloak
+                x-show="selected"
+                class="text-lg mt-3 h-20 mb-2"
+                x-transition.duration.500ms
+            >
+                <p>AI Models and RAG Systems</p>
+                <p>Private without Cloud</p>
             </div>
         </div>
 
         <div
-            class="hover-box grid grid-cols-2 overflow-hidden "
-            :class="vpart3 ? 'visible' : 'hidden'"
+            x-data="{size:148, visible: true, selected:false}"
+            class="hover-box   overflow-hidden duration-300 ease-in-out transition-all"
+            @click="selected = true"
+            @mouseleave="selected=false"
+            @mouseover=" selected=true"
         >
-            <div class="text-center flex  flex-col  items-center">
-                <h5>Front-End</h5>
+            <div
+                class="text-center flex  flex-col  items-center"
+            >
+                <h5 class="m-2">Web Development</h5>
                 <img
-                    class=""
+                    class="transition-transform duration-300 ease-in-out"
+                    :class="selected ? 'scale-125' : ''"
                     width="148px"
                     height="148px"
                     style="filter: invert(1);"
+                    draggable="false"
                     src="https://png.pngtree.com/png-vector/20230304/ourmid/pngtree-back-end-developer-line-icon-vector-png-image_6631175.png"
                     alt=""
-                >
+                ></img>
+
             </div>
-
-
-            <div class="text-nowrap text-left mt-6 pr-20 overflow-hidden">
-                <ul>
-                    <li>- React, Preact, Next</li>
-                    <li>- Vue, Nuxt</li>
-                    <li>- Angular</li>
-                    <li>- Astro</li>
-                </ul>
+            <div
+                x-cloak
+                x-show="selected"
+                x-transition.duration.500ms
+                class="text-lg h-20 mt-3"
+            >
+                From simple web page to complex web application and API services
             </div>
         </div>
 
         <div
-            class=" hover-box grid grid-cols-2 overflow-hidden text-ellipsis"
-            :class="vpart4 ? 'visible' : 'hidden'"
+            x-data="{size:148, visible: true, selected:false}"
+            class="hover-box   overflow-hidden duration-300 ease-in-out transition-all"
+            @click="selected = true"
+            @mouseover=" selected=true"
+            @mouseleave=" selected=false"
         >
-            <div class="text-center flex  flex-col  items-center">
-                <h5 class="mr-2">Back-End</h5>
+            <div
+                class="text-center flex  flex-col  items-center"
+            >
+                <h5 class="m-2">Game Development</h5>
                 <img
-                    class="mt-2  w-128 h-128"
+                    class="h-full mt-5 mb-5 transition-transform duration-300 ease-in-out"
+                    :class="selected ? 'scale-125' : ''"
                     width="128px"
                     height="128px"
-                    src="https://www.seekpng.com/png/full/825-8255564_png-file-svg-cloud-backend-icon.png"
                     style="filter: invert(1);"
-                    alt=""
-                >
+                    draggable="false"
+                    src="https://static-00.iconduck.com/assets.00/space-invader-icon-512x381-ju8g43j6.png"                    alt=""
+                ></img>
             </div>
-
-            <div class="text-nowrap text-left mt-6 pr-20 overflow-hidden">
-                <ul>
-                    <li>- Docker</li>
-                    <li>- Kubernetes</li>
-                    <li>- local, intern systems</li>
-                    <li>- SQL, NoSQL, Vector DBs,...</li>
-                </ul>
+            <div
+                x-cloak
+                x-show="selected"
+                class="text-lg h-20 mt-3 mb-3"
+                x-transition.duration.500ms
+            >
+                <p>Engine and Physics Code</p>
+                <p>Game Logic for your Game</p>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    import Alpine from 'alpinejs';
-
-    Alpine.data('contentData', () => ({
-        visible:true,
-        vpart1:true,
-        vpart2:true,
-        vpart3:true,
-        vpart4:true,
-        vpart5:true,
-        // Initialize IntersectionObserver
-        init() {
-            const dt = 600;
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if(entry.isIntersecting){
-                        setTimeout(() => {
-                            setTimeout(()=>{
-                                this.vpart1 = true
-                                setTimeout(()=>{
-                                    this.vpart2 = true
-                                    setTimeout(()=>{
-                                        this.vpart3 = true
-                                        setTimeout(()=>{
-                                            this.vpart4 = true
-                                            setTimeout(()=>{
-                                                this.vpart5 = true
-                                            },dt)
-                                        },dt)
-                                    },dt)
-                                },dt)
-                            },dt)
-                            this.visible = true
-                        },dt)
-
-                } else {
-                }
-            });
-            });
-            observer.observe(this.$refs.contentDiv);
-        }
-    }));
-</script>
 
 <style>
+
+    [x-cloak] {
+        display: none;
+    }
+
     .hover-box {
         padding:0.75rem;
         border-radius: 5px;
-        /* background-color: #3498db; */
     }
 
     .hover-box:hover   {
