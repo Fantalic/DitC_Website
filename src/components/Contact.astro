@@ -98,7 +98,8 @@
             }
 
             try {
-                const response = await fetch('http://localhost:8080/data', {
+              const url = "http://90.186.137.215"
+                const response = await fetch(url+'/data', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
