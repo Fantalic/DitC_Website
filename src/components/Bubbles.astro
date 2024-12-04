@@ -24,7 +24,7 @@ const count = 45;
       const bubble = document.createElement("span");
       const parent = document.createElement("div");
 
-      // bubble.addEventListener('click', ()=>this.destroyBubble(bubble))
+
 
        // Generate random size and animation duration
       const size = 40 * Math.random() +10;
@@ -53,11 +53,24 @@ const count = 45;
       parent.appendChild(bubble);
       document.getElementById("bubbles").appendChild(parent);
 
-
-      const id = this.bubbleCount;
       Alpine.store("globalState").bubbles.push(
-        [bubble,parent]
+          [bubble,parent]
       )
+
+      if(Alpine.store("globalState").bubbleScore <= 10){
+        bubble.addEventListener('click', ()=>{
+
+          if(Alpine.store("globalState").bubbleScore > 10){
+            return;
+          }
+          bubble.remove()
+          parent.remove()
+          Alpine.store("globalState").bubbleScore++
+
+          Alpine.store("globalState").spawnBubble()
+        })
+      }
+
 
 
       this.bubbleCount++; //

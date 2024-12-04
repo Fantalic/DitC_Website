@@ -1,33 +1,30 @@
-
 <div
-    class="ufo"
     x-init
+    x-data="ufo"
 >
-    <div class="ufo-top"></div>
-    <div class="beam"></div>
-    <div class="ufo-body">
+    <div
+        class="ufo"
+    >
+        <div class="ufo-top"></div>
+        <div class="beam"></div>
+        <div class="ufo-body">
+        </div>
     </div>
+    <template x-if="$store.globalState.bubbles.length > 10">
+        <div class="fixed  bottom-0 z-40" >SCORE: <p x-text="$store.globalState.bubbleScore"></p></div>
+    </template>
 </div>
-<div class="absolute bottom-0 z-40" >SCORE: <p x-text="$store.globalState.bubbleScore"></p></div>
 
 
 
-<script  >
-
+<script>
     import Alpine from "alpinejs";
 
-
-    const ufo = document.querySelector('.ufo');
+    let ufo;
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
 
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
     function checkBubbleCollision(x1, y1, x2, y2,bubble) {
-
         const bubbleRect = bubble.getBoundingClientRect();
         const bubbleCenterX = bubbleRect.left + bubbleRect.width / 2;
         const bubbleCenterY = bubbleRect.top + bubbleRect.height / 2 + window.scrollY;
@@ -109,8 +106,8 @@
 
     function shootLaser(e) {
         const laser = document.createElement('div');
-        // const space = document.getElementById('space');
-        const space =  document.documentElement;
+        const space = document.getElementById('ocean');
+        // const space =  document.documentElement;
         space.appendChild(laser);
 
         const rect = ufo.getBoundingClientRect();
@@ -126,7 +123,6 @@
         laser.style.boxShadow= "0 0 10px red";
         laser.style.borderRadius= "50%";
         laser.style.pointerEvents= "none";
-        laser.style.zIndex= "10";
         laser.style.boxShadow= "0 0 10px 5px #7293ff, inset 0 0 5px #7293ff";
         laser.classList.add('bg-red-700');
         laser.classList.add('laser-projectile');
@@ -184,6 +180,7 @@
         }
 
         const hittedBubbles = checkCollisions(startX, startY, endX, endY);
+        console.log(hittedBubbles.length)
 
         // Animation duration
         const duration = 1000; // milliseconds
@@ -247,13 +244,27 @@
         requestAnimationFrame(animate);
     }
 
-    document.addEventListener('mousedown', (e) => {
-        if (e.button === 0) {
-            shootLaser(e);
-        }
-    });
+    Alpine.data('ufo', () => ({
+        init(){
 
-    moveUFO();
+            ufo = document.querySelector('.ufo');
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            document.addEventListener('mousedown', (e) => {
+                if (e.button === 0) {
+                    shootLaser(e);
+                }
+            });
+
+            moveUFO();
+        }
+    }))
+
+
 </script>
 <style>
     .ufo {

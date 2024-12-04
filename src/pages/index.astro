@@ -4,6 +4,7 @@ import Bubbles from "../components/Bubbles.astro";
 import Content from "../components/Content.astro";
 import Contact from "../components/Contact.astro";
 import Ufo from "../components/Ufo.astro";
+import Octopus from "../components/Octopus.astro";
 
 ---
 
@@ -39,6 +40,7 @@ import Ufo from "../components/Ufo.astro";
 		</div>
 
 		<div
+			id="ocean"
 			class=" ocean-container relative linear-gradient-to-b from-blue-500 to-blue-800 overflow-hidden items-center justify-center"
 		>
 			<div class="liquid liquid-sm"></div>
@@ -74,7 +76,16 @@ import Ufo from "../components/Ufo.astro";
 			</section>
 
 			<div style="height:250vh"> </div>
-			<Ufo  ></Ufo>
+			<template x-if="$store.globalState.bubbleScore > 10">
+				<Ufo></Ufo>
+			</template>
+
+			<template x-if="$store.globalState.bubbleScore > 100">
+				<div  class="relative  items-center justify-center left-48 " style="bottom:100vh; height:0">
+					<Octopus></Octopus>
+				</div>
+			</template>
+
 			<Bubbles></Bubbles>
 		</div>
 
