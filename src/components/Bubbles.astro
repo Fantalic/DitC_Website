@@ -4,63 +4,76 @@ const count = 45;
 ---
 <!-- <div id="animatedElement" class="text-white w-10 h-10 bottom-10 z-60 absolute"> HALLO</div> -->
 
-<div class="bubbles">
-
-  {Array.from({ length: count }, (_, i) => {
-    const size = 50*Math.random();
-    const animationDuration = 30*(Math.round(Math.random())+2 )
-    const offset ={
-      top:50*Math.random()-25+"vh",
-      position: "relative",
-      width: size +"px",
-      height: size+"px",
-    }
-    const style = {
-      opacity:  0.3*Math.random()+0.1,
-      left: 120*Math.random()-10+"%",
-      animationDelay: 60*Math.random()+"s",
-      animationDuration: animationDuration+"s",
-    }
-
-    return (
-        <span style={style} >
-          <div style={offset}></div>
-        </span>
-    )
-    })}
+<div
+  id="bubbles"
+  class="bubbles"
+  x-data="bubbles"
+  x-init
+>
 </div>
 <script>
-    // const element = document.getElementById('animatedElement');
-    // const duration = 3000; // Duration of the animation in milliseconds
-    // const startTime = performance.now(); // Get the current time
-    // console.log(element)
+  import Alpine from "alpinejs";
 
-    // function animate(time) {
-    //     const elapsed = time - startTime;
+  const respawnDelay = 60;
 
-    //     // Calculate progress (0 to 1)
-    //     const progress = Math.min(elapsed / duration, 1);
+  Alpine.data("bubbles", () => ({
 
-    //     // Define your function f(x)
-    //     const a = -200; // Coefficient for the parabola
-    //     const b = 400; // Linear coefficient
-    //     const c = 100; // Constant term
+    bubbleCount:0,
 
-    //     // Calculate x position based on progress
-    //     const x = progress * window.innerWidth; // Move across the screen
-    //     const y = a * Math.pow(x / window.innerWidth, 2) + b * (x / window.innerWidth) + c; // f(x)
+    spawnBubble(){
+      const bubble = document.createElement("span");
+      const parent = document.createElement("div");
 
-    //     // Set the new position of the element
-    //     element.style.transform = `translate(${x}px, ${y}px)`;
+      // bubble.addEventListener('click', ()=>this.destroyBubble(bubble))
 
-    //     // Continue animating until duration is reached
-    //     if (progress < 1) {
-    //         requestAnimationFrame(animate);
-    //     }
-    // }
+       // Generate random size and animation duration
+      const size = 40 * Math.random() +10;
+      const animationDuration = 50 * (Math.round(Math.random()) + 2);
+      const delay = (1 * Math.random())
+      // Create the child div
+      bubble.style.top = (200 * Math.random() - 100) + "vh";
+      parent.style.top = (200 * Math.random() - 100) + "vh";
+      parent.style.position = "relative";
 
-    // Start the animation
-    // requestAnimationFrame(animate);
+      bubble.style.bottom= "100vh";
+      bubble.style.width = size + "px";
+      bubble.style.height = size + "px";
+      bubble.style.borderRadius = "100%";
+      // Append the child div to the bubble span
+      // Set styles for the bubble span
+      bubble.style.backgroundColor = "white";
+      bubble.style.opacity = ""+(0.3 * Math.random() + 0.1);
+      bubble.style.left = (120 * Math.random() - 10) + "%";
+      bubble.style.animationDelay = delay + "s";
+      bubble.style.animationDuration = animationDuration + "s";
+      bubble.style.position = "absolute";
+
+      bubble.style.animation = "bubble " + animationDuration + "s ease-in-out infinite";
+      // Append the bubble span to the bubbles container
+      parent.appendChild(bubble);
+      document.getElementById("bubbles").appendChild(parent);
+
+
+      const id = this.bubbleCount;
+      Alpine.store("globalState").bubbles.push(
+        [bubble,parent]
+      )
+
+
+      this.bubbleCount++; //
+    },
+    init(){
+
+      Alpine.store("globalState").bubbles = [];
+      Alpine.store("globalState").spawnBubble = this.spawnBubble
+
+      for (let i = 0; i < 50; i++) {
+        this.spawnBubble();
+      }
+
+    }
+  }))
+
 </script>
 
 <style>
@@ -68,8 +81,9 @@ const count = 45;
 .bubbles {
   position: relative;
   width: 100%;
-  top:25vh;
-  animation: bubbles  0s linear infinite;
+  height:100%;
+  /* top:25vh; */
+  animation: bubbles  30s linear infinite;
 }
 
 @keyframes bubbles {
@@ -77,18 +91,41 @@ const count = 45;
   50% {transform: rotate(0.5deg);}
 }
 
-.bubbles div {
-  border-radius: 100%;
-  background-color: white;
-}
-.bubbles span {
-  position: absolute;
-  animation: bubble 1s ease-in-out infinite;
-}
-
 @keyframes bubble {
-  0% {bottom: 0; opacity: 0;}
-  100% {bottom: 750vh; }
+  0% {opacity: 0;  }
+  100% {top: -750vh; }
 }
 
 </style>
+<!--
+// const element = document.getElementById('animatedElement');
+// const duration = 3000; // Duration of the animation in milliseconds
+// const startTime = performance.now(); // Get the current time
+// console.log(element)
+
+// function animate(time) {
+//     const elapsed = time - startTime;
+
+//     // Calculate progress (0 to 1)
+//     const progress = Math.min(elapsed / duration, 1);
+
+//     // Define your function f(x)
+//     const a = -200; // Coefficient for the parabola
+//     const b = 400; // Linear coefficient
+//     const c = 100; // Constant term
+
+//     // Calculate x position based on progress
+//     const x = progress * window.innerWidth; // Move across the screen
+//     const y = a * Math.pow(x / window.innerWidth, 2) + b * (x / window.innerWidth) + c; // f(x)
+
+//     // Set the new position of the element
+//     element.style.transform = `translate(${x}px, ${y}px)`;
+
+//     // Continue animating until duration is reached
+//     if (progress < 1) {
+//         requestAnimationFrame(animate);
+//     }
+// }
+
+// Start the animation
+// requestAnimationFrame(animate); -->

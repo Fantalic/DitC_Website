@@ -1,0 +1,353 @@
+
+<div
+    class="ufo"
+    x-init
+>
+    <div class="ufo-top"></div>
+    <div class="beam"></div>
+    <div class="ufo-body">
+    </div>
+</div>
+<div class="absolute bottom-0 z-40" >SCORE: <p x-text="$store.globalState.bubbleScore"></p></div>
+
+
+
+<script  >
+
+    import Alpine from "alpinejs";
+
+
+    const ufo = document.querySelector('.ufo');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function checkBubbleCollision(x1, y1, x2, y2,bubble) {
+
+        const bubbleRect = bubble.getBoundingClientRect();
+        const bubbleCenterX = bubbleRect.left + bubbleRect.width / 2;
+        const bubbleCenterY = bubbleRect.top + bubbleRect.height / 2 + window.scrollY;
+        let bubbleRadius = bubbleRect.width / 2;
+        bubbleRadius = bubbleRadius <5 ? 5 : bubbleRadius;
+
+        function lineCircle(x1, y1, x2, y2, cx, cy, radius) {
+            // Calculate squared radius for comparison
+            const rSquared = radius * radius;
+
+            // Vector from point1 to point2
+            const dx = x2 - x1;
+            const dy = y2 - y1;
+
+            // Vector from point1 to circle center
+            const fx = cx - x1;
+            const fy = cy - y1;
+
+            // Project point onto the line segment
+            const t = (fx * dx + fy * dy) / (dx * dx + dy * dy);
+
+            let closestX, closestY;
+
+            if (t < 0) {
+                closestX = x1; // Closest point is point1
+                closestY = y1;
+            } else if (t > 1) {
+                closestX = x2; // Closest point is point2
+                closestY = y2;
+            } else {
+                closestX = x1 + t * dx; // Point on line segment
+                closestY = y1 + t * dy;
+            }
+
+            // Calculate distance from circle center to closest point
+            const distanceSquared = (closestX - cx) ** 2 + (closestY - cy) ** 2;
+
+            return distanceSquared <= rSquared; // Check if within radius
+        }
+
+        // Check if the line segment intersects with the circle
+        const isColliding = lineCircle(x1, y1, x2, y2, bubbleCenterX, bubbleCenterY, bubbleRadius);
+
+        return isColliding
+    }
+
+    function moveUFO() {
+        const rect = ufo.getBoundingClientRect();
+        const ufoX = rect.left + rect.width / 2;
+        const ufoY = rect.top + rect.height / 2;
+
+        const deltaX = mouseX - ufoX;
+        const deltaY = mouseY - ufoY;
+
+        const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
+        const speed = Math.min(distance * 0.01, 30); // Speed increases with distance, capped at 30px per frame
+
+        const moveX = deltaX * speed / distance || 0;
+        const moveY = deltaY * speed / distance || 0;
+
+        const angleX = Math.min(deltaY / 15, 20); // Max tilt of 20 degrees for vertical movement
+        const angleY = Math.min(deltaX / 15, 20); // Max tilt of 20 degrees for horizontal movement
+
+        const perspectiveShiftX = deltaX / 40; // Simulate perspective shift horizontally
+        const perspectiveShiftY = deltaY / 40; // Simulate perspective shift vertically
+
+        const currentLeft = parseFloat(getComputedStyle(ufo).left);
+        const currentTop = parseFloat(getComputedStyle(ufo).top);
+
+        ufo.style.left = `${currentLeft + moveX}px`;
+        ufo.style.top = `${currentTop + moveY}px`;
+
+        // Update rotation and perspective for 3D effect
+        ufo.style.transform = `translate(-50%, -50%) perspective(800px) rotateX(${-perspectiveShiftY}deg) rotateY(${perspectiveShiftX}deg) skewX(${-angleY}deg) skewY(${angleX}deg)`;
+
+        requestAnimationFrame(moveUFO);
+    }
+
+
+    function shootLaser(e) {
+        const laser = document.createElement('div');
+        // const space = document.getElementById('space');
+        const space =  document.documentElement;
+        space.appendChild(laser);
+
+        const rect = ufo.getBoundingClientRect();
+        const ufoX = rect.left + rect.width / 2
+        const ufoY = (rect.top + rect.height / 2) ;
+
+        laser.style.left = `${ufoX}px`;
+        laser.style.top = `${ufoY+ window.scrollY}px`;
+        laser.style.position= "absolute";
+        laser.style.width= "15px";
+        laser.style.height= "3px";
+        laser.style.background= "red";
+        laser.style.boxShadow= "0 0 10px red";
+        laser.style.borderRadius= "50%";
+        laser.style.pointerEvents= "none";
+        laser.style.zIndex= "10";
+        laser.style.boxShadow= "0 0 10px 5px #7293ff, inset 0 0 5px #7293ff";
+        laser.classList.add('bg-red-700');
+        laser.classList.add('laser-projectile');
+
+
+        const deltaX = e.clientX - ufoX;
+        const deltaY = e.clientY - ufoY;
+
+        const angle = Math.atan2(deltaY, deltaX);
+
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        // Calculate farthest point in direction of mouse
+        const distanceToEdge = Math.max(screenWidth, screenHeight);
+        let endX = Math.cos(angle) *  distanceToEdge
+        let endY = Math.sin(angle) *  (distanceToEdge )
+
+        laser.style.transform = `rotate(${angle}rad)`;
+
+        const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
+
+        // const animation = laser.animate([
+        //     { transform: `translate(0, 0) rotate(${angle}rad)` },
+        //     { transform: `translate(${endX}px, ${endY}px) rotate(${angle}rad)` }
+        // ], {
+        //     duration: 1000,
+        //     easing: 'linear'
+        // });
+
+        // animation.onfinish = () => {
+        //     laser.remove();
+        // };
+
+
+        // Set initial position
+        endX += ufoX
+        endY += window.scrollY + ufoY
+        let startX = ufoX;
+        let startY = ufoY + window.scrollY;
+        const bubbles = Alpine.store('globalState').bubbles;
+
+        function checkCollisions(startX, startY, endX, endY) {
+
+            const hittedBubbles = []
+            for (let i = 0; i < bubbles.length; i++) {
+                const bubble = bubbles[i][0];
+                const isColliding = checkBubbleCollision(startX, startY, endX, endY, bubble);
+
+                if (isColliding) {
+                    hittedBubbles.push(bubbles[i])
+                    bubbles.splice(i, 1);
+                }
+            }
+            return hittedBubbles
+        }
+
+        const hittedBubbles = checkCollisions(startX, startY, endX, endY);
+
+        // Animation duration
+        const duration = 1000; // milliseconds
+        let startTime:number;
+
+        function animate(timestamp) {
+            if (!startTime) startTime = timestamp; // Initialize start time
+
+            // Calculate elapsed time
+            const elapsedTime = timestamp - startTime;
+
+            // Calculate progress (0 to 1)
+            const progress = Math.min(elapsedTime / duration, 1);
+
+            // Update position based on progress
+            const x = startX + (endX - startX) * progress
+            const y = startY+ (endY - startY) * progress
+            laser.style.left = `${x}px`;
+            laser.style.top = `${y}px`;
+
+            for (let i = 0; i < hittedBubbles.length; i++) {
+                const bubble = hittedBubbles[i];
+
+
+                const bubbleRect = bubble[0].getBoundingClientRect();
+                const bubbleCenterX = bubbleRect.left + bubbleRect.width / 2;
+                const bubbleCenterY = bubbleRect.top + bubbleRect.height / 2 + window.scrollY;
+                let bubbleRadius = bubbleRect.width / 2;
+                bubbleRadius = bubbleRadius <5 ? 5 : bubbleRadius;
+
+                if(
+                    bubbleCenterX + bubbleRadius > x &&
+                    bubbleCenterX - bubbleRadius < x &&
+                    bubbleCenterY + bubbleRadius > y &&
+                    bubbleCenterY - bubbleRadius < y
+                ){
+                    bubble[0].remove()
+                    bubble[1].remove()
+                    Alpine.store('globalState').bubbleScore++
+                    Alpine.store('globalState').spawnBubble()
+                }
+
+            }
+
+            // Continue animation until duration is complete
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                //TODO: this should not be needed
+                for (let i = 0; i < hittedBubbles.length; i++) {
+                    hittedBubbles[i][0].remove()
+                    hittedBubbles[i][1].remove()
+                    Alpine.store('globalState').spawnBubble()
+                    Alpine.store('globalState').bubbleScore++
+                }
+                laser.remove(); // Remove the laser after animation completes
+            }
+        }
+
+        // Start the animation
+        requestAnimationFrame(animate);
+    }
+
+    document.addEventListener('mousedown', (e) => {
+        if (e.button === 0) {
+            shootLaser(e);
+        }
+    });
+
+    moveUFO();
+</script>
+<style>
+    .ufo {
+        position: absolute;
+        width: 75px;
+        height: 25px;
+        background: linear-gradient(to right, #bbb, #eee);
+        border-radius: 50%;
+        box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.7);
+        transform-origin: center center;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) perspective(800px);
+        transition: transform 0.1s linear;
+        z-index:20;
+        overflow: hidden;
+    }
+
+    .ufo-top {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 30px;
+        background: linear-gradient(to top, #999, #fff);
+        border-radius: 50%;
+        box-shadow: 0 0 15px 3px rgba(255, 255, 255, 0.7);
+    }
+
+    .ufo::before {
+        content: '';
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(to top, rgba(200, 200, 200, 0.9), rgba(255, 255, 255, 0.8));
+        border-radius: 50%;
+        box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
+    }
+
+    .beam {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) scaleY(0);
+        width: 120px;
+        height: 300px;
+        background: radial-gradient(circle at center, rgba(255, 255, 204, 0.5), rgba(255, 255, 204, 0) 70%);
+        clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        animation: beam-flicker 3s infinite;
+    }
+
+    @keyframes beam-flicker {
+        0%, 100% {
+            transform: translateX(-50%) scaleY(0);
+            opacity: 0.7;
+        }
+        50% {
+            transform: translateX(-50%) scaleY(1);
+            opacity: 1;
+        }
+    }
+
+    .ufo-body {
+        position: absolute;
+        width: 75px;
+        height: 25px;
+        background: linear-gradient(135deg, #888, #bbb);
+        border-radius: 50%;
+        animation: rotate-body 1.5s linear infinite;
+        z-index: -1;
+    }
+
+    @keyframes rotate-body {
+        0% {
+            background: linear-gradient(135deg, #888, #bbb);
+        }
+        50% {
+            background: linear-gradient(225deg, #bbb, #888);
+        }
+        100% {
+            background: linear-gradient(135deg, #888, #bbb);
+        }
+    }
+
+    .laser-projectile {
+        position: absolute;
+        width: 5px;
+        height: 15px;
+        box-shadow: 0 0 10px red;
+        border-radius: 50%;
+        pointer-events: none;
+        background-color:red;
+        z-index:-12;
+    }
+</style>

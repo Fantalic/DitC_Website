@@ -3,6 +3,7 @@ import Cube from "../components/Cube.astro";
 import Bubbles from "../components/Bubbles.astro";
 import Content from "../components/Content.astro";
 import Contact from "../components/Contact.astro";
+import Ufo from "../components/Ufo.astro";
 
 ---
 
@@ -15,7 +16,7 @@ import Contact from "../components/Contact.astro";
 		<title>Astro</title>
 	</head>
 	<body
-		class="bg-gray-900 text-white select-none scroll-smooth"
+		class="bg-gray-900 text-white select-none scroll-smooth overflow-x-hidden"
 		x-data="data"
 		x-init
 	>
@@ -73,6 +74,7 @@ import Contact from "../components/Contact.astro";
 			</section>
 
 			<div style="height:250vh"> </div>
+			<Ufo  ></Ufo>
 			<Bubbles></Bubbles>
 		</div>
 
@@ -80,6 +82,11 @@ import Contact from "../components/Contact.astro";
 	<script >
 		import Alpine from 'alpinejs';
 		import {scrollTo} from '../scripts/scrollControl';
+
+		Alpine.store('globalState', {
+			bubbles:[],
+			bubbleScore:0,
+		});
 
 		Alpine.data('data', () => ({
 			showFooter:false,
